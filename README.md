@@ -121,8 +121,8 @@ make re        # Yeniden derle
 
 ## 👤 Geliştirici
 
-**[Adınız Soyadınız]**  
-42 İntra: `[intra_login]`
+**Ömer Ali Adalı**  
+42 İntra: `omadali`
 
 ## 📄 Lisans
 
