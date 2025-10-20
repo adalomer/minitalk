@@ -6,31 +6,49 @@
 /*   By: omadali <omadali@student.42kocaeli.com.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 23:18:10 by omadali           #+#    #+#             */
-/*   Updated: 2024/12/13 04:30:49 by omadali          ###   ########.fr       */
+/*   Updated: 2024/12/14 19:31:11 by omadali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
 
-
-void signal_hand(int signal)
+void	ft_putnbr(int n)
 {
-    if (signal == SIGUSR1)
-        printf("sigusr1 alındı\n");
-    else if(signal == SIGUSR2)
-        printf("sigusr2 alındı \n");
+	char	c;
+
+	if (n >= 10)
+	{
+		ft_putnbr(n / 10);
+	}
+	c = (n % 10) + '0';
+	write(1, &c, 1);
 }
 
-int main()
+void	signal_hand(int signal)
 {
-    signal(SIGUSR1, signal_hand);
-    signal(SIGUSR2,signal_hand);
-    printf("PID: %d\n", getpid());
-    while(1)
-    {
-        pause();
-    }
-    return (0);
+	static int	a = 0;
+	static int	b = 1;
+
+	if (signal == SIGUSR1)
+		a = a + b;
+	b = b * 2;
+	if (b > 128)
+	{
+		write(1, &a, 1);
+		b = 1;
+		a = 0;
+	}
+}
+
+int	main(void)
+{
+	signal(SIGUSR1, signal_hand);
+	signal(SIGUSR2, signal_hand);
+	ft_putnbr(getpid());
+	while (1)
+	{
+		pause();
+	}
+	return (0);
 }
